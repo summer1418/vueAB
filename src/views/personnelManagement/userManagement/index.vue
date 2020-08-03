@@ -149,8 +149,10 @@
       },
       handleEdit(row) {
         if (row.id) {
+          console.log(id);
           this.$refs["edit"].showEdit(row);
         } else {
+          console.log(id);
           this.$refs["edit"].showEdit();
         }
       },
