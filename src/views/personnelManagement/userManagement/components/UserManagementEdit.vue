@@ -9,21 +9,19 @@
       <el-form-item label="用户名" prop="username">
         <el-input v-model.trim="form.username" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input
-          v-model.trim="form.password"
-          type="password"
+      <el-form-item label="数据类型" prop="DATATYPE">
+        <el-select
+          v-model.trim="DATATYPE"
+          placeholder="请选择"
           autocomplete="off"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model.trim="form.email" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="权限" prop="permissions">
-        <el-checkbox-group v-model="form.permissions">
-          <el-checkbox label="admin"></el-checkbox>
-          <el-checkbox label="editor"></el-checkbox>
-        </el-checkbox-group>
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -40,6 +38,11 @@
     name: "UserManagementEdit",
     data() {
       return {
+        options: [
+          { value: "XML", label: "XML" },
+          { value: "JSON", label: "JSON" },
+        ],
+        DATATYPE: "",
         form: {
           username: "",
           password: "",
@@ -50,13 +53,16 @@
           username: [
             { required: true, trigger: "blur", message: "请输入用户名" },
           ],
-          password: [
-            { required: true, trigger: "blur", message: "请输入密码" },
+          DATATYPE: [
+            { required: true, trigger: "blur", message: "请选择数据类型" },
           ],
-          email: [{ required: true, trigger: "blur", message: "请输入邮箱" }],
-          permissions: [
-            { required: true, trigger: "blur", message: "请选择权限" },
-          ],
+          // password: [
+          //   { required: true, trigger: "blur", message: "请输入密码" },
+          // ],
+          // email: [{ required: true, trigger: "blur", message: "请输入邮箱" }],
+          // permissions: [
+          //   { required: true, trigger: "blur", message: "请选择权限" },
+          // ],
         },
         title: "",
         dialogFormVisible: false,
