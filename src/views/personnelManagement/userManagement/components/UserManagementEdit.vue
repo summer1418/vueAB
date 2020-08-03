@@ -6,12 +6,12 @@
     @close="close"
   >
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model.trim="form.username" autocomplete="off"></el-input>
+      <el-form-item label="报表名称" prop="REPORTNAME">
+        <el-input v-model.trim="form.REPORTNAME" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="数据类型" prop="DATATYPE">
         <el-select
-          v-model.trim="DATATYPE"
+          v-model.trim="form.DATATYPE"
           placeholder="请选择"
           autocomplete="off"
         >
@@ -74,6 +74,9 @@
         if (!row) {
           this.title = "添加";
         } else {
+          if (row.DATATYPE == "") {
+            row.DATATYPE = "XML";
+          }
           this.title = "编辑";
           this.form = Object.assign({}, row);
         }
