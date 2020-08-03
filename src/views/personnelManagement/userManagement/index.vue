@@ -36,32 +36,44 @@
       <el-table-column show-overflow-tooltip type="selection"></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="id"
+        prop="REPORTNAME"
         label="id"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="username"
-        label="用户名"
+        prop="REPORTNAME"
+        label="报表名称"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
-        prop="email"
-        label="邮箱"
+        prop="FLOWSNO"
+        label="流程号"
       ></el-table-column>
 
-      <el-table-column show-overflow-tooltip label="权限">
+      <!-- <el-table-column show-overflow-tooltip label="数据类型" :prop="DATATYPE">
         <template v-slot="{ row }">
-          <el-tag v-for="(item, index) in row.permissions" :key="index">
+          <el-tag :prop="row.DATATYPE">
             {{ item }}
+          </el-tag>
+        </template>
+      </el-table-column> -->
+      <el-table-column label="数据类型" width="180">
+        <template slot-scope="scope">
+          <!-- <el-tag size="medium" type="warning"> -->
+          <el-tag
+            size="medium"
+            :type="scope.row.DATATYPE == '' ? 'danger' : 'warning'"
+          >
+            {{ scope.row.DATATYPE == "" ? "XML" : scope.row.DATATYPE }}
           </el-tag>
         </template>
       </el-table-column>
 
       <el-table-column
         show-overflow-tooltip
-        prop="datatime"
-        label="修改时间"
+        prop="INPUT_DATE"
+        label="设计时间"
+        :formatter="dataFormat"
       ></el-table-column>
       <el-table-column
         show-overflow-tooltip
@@ -93,6 +105,7 @@
 <script>
   import { getList, doDelete } from "@/api/userManagement";
   import Edit from "./components/UserManagementEdit";
+  import moment from "moment";
 
   export default {
     name: "UserManagement",
@@ -109,13 +122,28 @@
           pageNo: 1,
           pageSize: 10,
           username: "",
+          pageSearch: "",
         },
       };
     },
     created() {
       this.fetchData();
     },
+    mounted() {
+      getList(this.queryForm).then((value) => {
+        const data = value.data;
+      });
+    },
     methods: {
+      //日期格式化
+      dataFormat(val, column) {
+        var date = val[column.property];
+        if (date == "undefined") {
+          return "";
+        }
+        return moment(date).format("YYYY-MM-DD");
+      },
+
       setSelectRows(val) {
         this.selectRows = val;
       },
@@ -163,7 +191,14 @@
         this.listLoading = true;
         const { data, totalCount } = await getList(this.queryForm);
         this.list = data;
-        this.total = totalCount;
+        this.total = parseInt(totalCount);
+        // console.log(await getList(this.queryForm));
+        // console.log(getList(this.queryForm));
+        // getList(this.queryForm).then((value) => {
+        //   this.list = value.data;
+        //   this.total = parseInt(value.totalCount);
+        // });
+
         setTimeout(() => {
           this.listLoading = false;
         }, 300);

@@ -2,7 +2,7 @@ import request from "@/utils/request";
 
 export function getList(data) {
   return request({
-    url: "/userManagement/getList",
+    url: "/zx/testDic/getList.cfm",
     method: "post",
     data,
   });
