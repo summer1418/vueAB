@@ -39,6 +39,7 @@
     data() {
       return {
         options: [
+          { value: "", label: "请选择" },
           { value: "XML", label: "XML" },
           { value: "JSON", label: "JSON" },
         ],

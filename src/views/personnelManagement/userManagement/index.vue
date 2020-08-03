@@ -44,11 +44,15 @@
         prop="REPORTNAME"
         label="报表名称"
       ></el-table-column>
-      <el-table-column
-        show-overflow-tooltip
-        prop="FLOWSNO"
-        label="流程号"
-      ></el-table-column>
+      <el-table-column label="流程号" width="180">
+        <el-switch
+          :v-model="switchData"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          active-value="1"
+          inactive-value="0"
+        ></el-switch>
+      </el-table-column>
 
       <!-- <el-table-column show-overflow-tooltip label="数据类型" :prop="DATATYPE">
         <template v-slot="{ row }">
@@ -112,6 +116,7 @@
     components: { Edit },
     data() {
       return {
+        switchData: true,
         list: null,
         listLoading: true,
         layout: "total, sizes, prev, pager, next, jumper",
