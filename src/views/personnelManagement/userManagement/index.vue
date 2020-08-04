@@ -45,13 +45,15 @@
         label="报表名称"
       ></el-table-column>
       <el-table-column label="流程号" width="180">
-        <el-switch
-          :v-model="switchData"
-          active-color="#13ce66"
-          inactive-color="#ff4949"
-          active-value="1"
-          inactive-value="0"
-        ></el-switch>
+        <template v-slot="{ row }">
+          <el-switch
+            :v-model="row.DATATYPE"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            active-value=""
+            inactive-value="JSON"
+          ></el-switch>
+        </template>
       </el-table-column>
 
       <!-- <el-table-column show-overflow-tooltip label="数据类型" :prop="DATATYPE">
